@@ -44,6 +44,72 @@ app.get('/admin/startBetway', function(req, res) {
     })
 })
 
+app.get('/admin/startBetwayPremierLeague', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwayPremierLeague()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
+app.get('/admin/startBetwayEFLCup', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwayEFLCup()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
+app.get('/admin/startBetwayLaLiga', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwayLaLiga()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
+app.get('/admin/startBetwayLigue1', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwayLigue1()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
+app.get('/admin/startBetwaySerieA', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwaySerieA()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
+app.get('/admin/startBetwayBundesliga', function(req, res) {
+  oddsFinderScraper = new OddsFinderScraper();
+  oddsFinderScraper.scrapeBetwayBundesliga()
+    .then(() => {
+      res.json('{ success : true }');
+    })
+    .catch((err) => {
+      res.json('{ success : false }');
+    })
+})
+
 app.listen(port, () => {
     console.log('Server started at localhost:' + port);
 })

@@ -3,18 +3,23 @@ var Schema   = mongoose.Schema;
 
 var MatchSchema = new Schema({
   'PsuedoKey' : String,
-  'Service' : String,
-	'Date' : Date,
-	'Team1' : {
-    'Name': String,
-    'Price': String
-	},
-	'Team2' : {
-    'Name': String,
-    'Price': String
-	},
-	'DrawPrice' : String,
-	'Sport' : String
+  'Sport' : String,
+  'League': String,
+  'Date' : Date,
+  'Team1': String,
+  'Team2': String,
+  'MatchInstances' : [{
+    'Service' : String,
+    'Team1' : {
+      'Name': String,
+      'Price': String
+    },
+    'Team2' : {
+      'Name': String,
+      'Price': String
+    },
+    'DrawPrice' : String
+  }]
 });
 
 module.exports = mongoose.model('Match', MatchSchema);

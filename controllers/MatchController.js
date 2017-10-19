@@ -49,12 +49,12 @@ module.exports = {
     create: function (req, res) {
         var Match = new MatchModel({
           PsuedoKey : req.body.PsuedoKey,
-          Service: req.body.Service,
+          Sport : req.body.Sport,
+          League : req.body.League,
           Date : req.body.Date,
           Team1 : req.body.Team1,
           Team2 : req.body.Team2,
-          DrawPrice : req.body.DrawPrice,
-          Sport : req.body.Sport
+          MatchInstances : req.body.MatchInstances
         });
 
         Match.save(function (err, Match) {
@@ -87,12 +87,12 @@ module.exports = {
             }
 
             Match.PsuedoKey = req.body.PsuedoKey ? req.body.PsuedoKey : Match.PsuedoKey;
-            Match.Service = req.body.Service ? req.body.Service : Match.Service;
+            Match.Sport = req.body.Sport ? req.body.Sport : Match.Sport;
+            Match.League = req.body.League ? req.body.League : Match.League;
             Match.Date = req.body.Date ? req.body.Date : Match.Date;
             Match.Team1 = req.body.Team1 ? req.body.Team1 : Match.Team1;
             Match.Team2 = req.body.Team2 ? req.body.Team2 : Match.Team2;
-            Match.DrawPrice = req.body.DrawPrice ? req.body.DrawPrice : Match.DrawPrice;
-            Match.Sport = req.body.Sport ? req.body.Sport : Match.Sport;
+            Match.MatchInstances = req.body.MatchInstances ? req.body.MatchInstances : Match.MatchInstances;
 			
             Match.save(function (err, Match) {
                 if (err) {
