@@ -11,14 +11,51 @@ module.exports = {
      * MatchController.list()
      */
     list: function (req, res) {
-        MatchModel.find(function (err, Matchs) {
+        MatchModel.find(function (err, Matches) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting Match.',
                     error: err
                 });
             }
-            return res.json(Matchs);
+            return res.json(Matches);
+        });
+    },
+
+    /**
+     * MatchController.topLeagues()
+     */
+    topLeagues: function (req, res) {
+        MatchModel.find(function (err, Matches) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting Top Leagues.',
+                    error: err
+                });
+            }
+            let leagues = [];
+            for (let match of Matches) {
+              if (leagues.indexOf(match.League) === -1) {
+                leagues.push(match.League);
+              }
+            }
+            return res.json(leagues);
+        });
+    },
+
+    /**
+     * MatchController.getMatchesByLeague()
+     */
+    getMatchesByLeague: function (req, res) {
+        let league = req.params.league;
+        MatchModel.find({League: league}, function (err, Matches) {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Error when getting Match.',
+                    error: err
+                });
+            }
+            return res.json(Matches);
         });
     },
 

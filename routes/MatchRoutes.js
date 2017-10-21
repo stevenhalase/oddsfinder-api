@@ -10,6 +10,16 @@ router.get('/', MatchController.list);
 /*
  * GET
  */
+router.get('/top-leagues', MatchController.topLeagues);
+
+/*
+ * GET
+ */
+router.get('/league/:league', MatchController.getMatchesByLeague);
+
+/*
+ * GET
+ */
 router.get('/:id', MatchController.show);
 
 /*
