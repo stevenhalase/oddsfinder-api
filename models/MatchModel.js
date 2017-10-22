@@ -10,6 +10,7 @@ var MatchSchema = new Schema({
   'Team2': String,
   'MatchInstances' : [{
     'Service' : String,
+    'Region' : String,
     'Team1' : {
       'Name': String,
       'Price': String

@@ -5,8 +5,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 const port = process.env.PORT || 3080;
 
-const OddsFinderScraper = require('./scraper.js');
-
 const uristring =
   process.env.MONGODB_URI ||
   'mongodb://localhost/oddsfinder';
@@ -33,82 +31,8 @@ app.use(function(req, res, next) {
 let matchRoutes = require('./routes/MatchRoutes');
 app.use('/api/matches', matchRoutes);
 
-app.get('/admin/startBetway', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetway()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwayPremierLeague', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwayPremierLeague()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwayEFLCup', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwayEFLCup()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwayLaLiga', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwayLaLiga()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwayLigue1', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwayLigue1()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwaySerieA', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwaySerieA()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
-
-app.get('/admin/startBetwayBundesliga', function(req, res) {
-  oddsFinderScraper = new OddsFinderScraper();
-  oddsFinderScraper.scrapeBetwayBundesliga()
-    .then(() => {
-      res.json('{ success : true }');
-    })
-    .catch((err) => {
-      res.json('{ success : false }');
-    })
-})
+let scrapeRoutes = require('./scraper');
+app.use('/api/scrape', scrapeRoutes);
 
 app.listen(port, () => {
     console.log('Server started at localhost:' + port);
