@@ -9,6 +9,7 @@ var MatchSchema = new Schema({
   'Team1': String,
   'Team2': String,
   'MatchInstances' : [{
+    'PsuedoKey': String,
     'Service' : String,
     'Region' : String,
     'Team1' : {

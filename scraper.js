@@ -128,6 +128,7 @@ class OddsFinderScraper {
           })
           if (typeof matching === 'undefined') {
             existing._doc.MatchInstances.push({
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -160,6 +161,7 @@ class OddsFinderScraper {
             Team1: elData.eventtitle.split(' v ')[0],
             Team2: elData.eventtitle.split(' v ')[1],
             MatchInstances: [{
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -251,6 +253,7 @@ class OddsFinderScraper {
           })
           if (typeof matching === 'undefined') {
             existing._doc.MatchInstances.push({
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -283,6 +286,7 @@ class OddsFinderScraper {
             Team1: match.eventGames[0].outcomes[0].outcomeName,
             Team2: match.eventGames[0].outcomes[2].outcomeName,
             MatchInstances: [{
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -378,6 +382,7 @@ class OddsFinderScraper {
           })
           if (typeof matching === 'undefined') {
             existing._doc.MatchInstances.push({
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -410,6 +415,7 @@ class OddsFinderScraper {
             Team1: match.team1,
             Team2: match.team2,
             MatchInstances: [{
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -506,6 +512,7 @@ class OddsFinderScraper {
           })
           if (typeof matching === 'undefined') {
             existing._doc.MatchInstances.push({
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -538,6 +545,7 @@ class OddsFinderScraper {
             Team1: match.Name.split(' - ')[0],
             Team2: match.Name.split(' - ')[1],
             MatchInstances: [{
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -641,6 +649,7 @@ class OddsFinderScraper {
           })
           if (typeof matching === 'undefined') {
             existing._doc.MatchInstances.push({
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
@@ -673,6 +682,7 @@ class OddsFinderScraper {
             Team1: team1,
             Team2: team2,
             MatchInstances: [{
+              PsuedoKey: psuedoKey,
               Service: service,
               Region: region,
               Team1: {
