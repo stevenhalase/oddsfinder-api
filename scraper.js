@@ -730,7 +730,7 @@ class OddsFinderScraper {
       let mostCombinedSimilarity = this.similarity(keyp1, mostMatchKeyp1) + this.similarity(keyp2, mostMatchKeyp2);
 
       let within24Hours = false;
-      let daydiff = (new Date(parseInt(keyDate)).getMilliseconds() - new Date(parseInt(matchKeyDate)).getMilliseconds()) / 86400000;
+      let daydiff = Math.abs(parseInt(keyDate) - parseInt(matchKeyDate)) / 86400000;
       if (daydiff < 1) {
         within24Hours = true;
       }
@@ -743,7 +743,7 @@ class OddsFinderScraper {
 
     return this.similarity(keyp1, mostSimilar._doc.PsuedoKey.split('-')[0]) > .4 &&
            this.similarity(keyp2, mostSimilar._doc.PsuedoKey.split('-')[1]) > .4 &&
-           (new Date(parseInt(keyDate)).getMilliseconds() - new Date(parseInt(mostSimilar._doc.PsuedoKey.split('-')[2])).getMilliseconds()) / 86400000 < 1 ? 
+           Math.abs(parseInt(keyDate) - parseInt(mostSimilar._doc.PsuedoKey.split('-')[2])) / 86400000 < 1 ? 
            mostSimilar : null;
   }
 
