@@ -735,14 +735,14 @@ class OddsFinderScraper {
         within24Hours = true;
       }
 
-      if (combinedSimilarity > mostCombinedSimilarity && combinedSimilarity > 1 && within24Hours) {
+      if (combinedSimilarity > mostCombinedSimilarity && combinedSimilarity > .8 && within24Hours) {
         mostSimilar = match;
       }
 
     }
 
-    return this.similarity(keyp1, mostSimilar._doc.PsuedoKey.split('-')[0]) > .5 &&
-           this.similarity(keyp2, mostSimilar._doc.PsuedoKey.split('-')[1]) > .5 &&
+    return this.similarity(keyp1, mostSimilar._doc.PsuedoKey.split('-')[0]) > .4 &&
+           this.similarity(keyp2, mostSimilar._doc.PsuedoKey.split('-')[1]) > .4 &&
            (new Date(parseInt(keyDate)).getMilliseconds() - new Date(parseInt(mostSimilar._doc.PsuedoKey.split('-')[2])).getMilliseconds()) / 86400000 < 1 ? 
            mostSimilar : null;
   }
