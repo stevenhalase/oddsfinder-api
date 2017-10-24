@@ -118,7 +118,7 @@ class OddsFinderScraper {
     return new Promise((resolve, reject) => {
       let elData = $(val).data();
       let prices = $(val).find('.outcome-pricedecimal');
-      let psuedoKey = (elData.eventtitle.split(' v ')[0].split(' ').join('') + elData.eventtitle.split(' v ')[1].split(' ').join('') + new Date(elData.eventdate).getTime()).toLowerCase();
+      let psuedoKey = (elData.eventtitle.split(' v ')[0].split(' ').join('') + '-' + elData.eventtitle.split(' v ')[1].split(' ').join('') + '-' + new Date(elData.eventdate).getTime()).toLowerCase();
       Match.find({}, (err, matches) => {
         let existing = this.findExisting(psuedoKey, matches);
 
@@ -243,7 +243,7 @@ class OddsFinderScraper {
   parseMerryBetJSONMatches(match, service, region, league) {
     return new Promise((resolve, reject) => {
       let sport = match.category1Name;
-      let psuedoKey = (match.eventGames[0].outcomes[0].outcomeName.split(' ').join('') + match.eventGames[0].outcomes[2].outcomeName.split(' ').join('') + new Date(match.eventStart).getTime()).toLowerCase();
+      let psuedoKey = (match.eventGames[0].outcomes[0].outcomeName.split(' ').join('') + '-' + match.eventGames[0].outcomes[2].outcomeName.split(' ').join('') + '-' + new Date(match.eventStart).getTime()).toLowerCase();
       Match.find({}, (err, matches) => {
         let existing = this.findExisting(psuedoKey, matches);
 
@@ -372,7 +372,7 @@ class OddsFinderScraper {
       let odds = match.markets.find(el => {
         return el.name === '3 Way ';
       });
-      let psuedoKey = (match.team1.split(' ').join('') + match.team2.split(' ').join('') + new Date(match.date).getTime()).toLowerCase();
+      let psuedoKey = (match.team1.split(' ').join('') + '-' + match.team2.split(' ').join('') + '-' + new Date(match.date).getTime()).toLowerCase();
       Match.find({}, (err, matches) => {
         let existing = this.findExisting(psuedoKey, matches);
 
@@ -502,7 +502,7 @@ class OddsFinderScraper {
   parseBetPawaJSONMatches(match, service, region, league) {
     return new Promise((resolve, reject) => {
       let sport = "Soccer";
-      let psuedoKey = (match.Name.split(' - ')[0].split(' ').join('') + match.Name.split(' - ')[1].split(' ').join('') + new Date(match.StartsRaw).getTime()).toLowerCase();
+      let psuedoKey = (match.Name.split(' - ')[0].split(' ').join('') + '-' + match.Name.split(' - ')[1].split(' ').join('') + '-' + new Date(match.StartsRaw).getTime()).toLowerCase();
       Match.find({}, (err, matches) => {
         let existing = this.findExisting(psuedoKey, matches);
 
@@ -639,7 +639,7 @@ class OddsFinderScraper {
       let year = '20' + dateEl.split('Date: ')[1].split('.')[2].split(' ')[0];
       let time = dateEl.split('Date: ')[1].split('.')[2].split(' ')[1];
       let dateString = year + '-' + month + '-' + day + ' ' + time;
-      let psuedoKey = (team1.split(' ').join('') + team2.split(' ').join('') + new Date(dateString).getTime()).toLowerCase();
+      let psuedoKey = (team1.split(' ').join('') + '-' + team2.split(' ').join('') + '-' + new Date(dateString).getTime()).toLowerCase();
       Match.find({}, (err, matches) => {
         let existing = this.findExisting(psuedoKey, matches);
 
@@ -710,14 +710,41 @@ class OddsFinderScraper {
   findExisting(psuedoKey, matches) {
     if (matches.length < 1) {
       return null;
-    }  
+    }
+
     let mostSimilar = matches[0];
+
+    let keyp1 = psuedoKey.split('-')[0];
+    let keyp2 = psuedoKey.split('-')[1];
+    let keyDate = psuedoKey.split('-')[2];
+
     for (let match of matches) {
-      if (this.similarity(psuedoKey, match._doc.PsuedoKey) > this.similarity(psuedoKey, mostSimilar._doc.PsuedoKey) && this.similarity(psuedoKey, match._doc.PsuedoKey) > 0.5) {
+      let matchKeyp1 = match._doc.PsuedoKey.split('-')[0];
+      let matchKeyp2 = match._doc.PsuedoKey.split('-')[1];
+      let matchKeyDate = match._doc.PsuedoKey.split('-')[2];
+      let combinedSimilarity = this.similarity(keyp1, matchKeyp1) + this.similarity(keyp2, matchKeyp2);
+      
+      let mostMatchKeyp1 = mostSimilar._doc.PsuedoKey.split('-')[0];
+      let mostMatchKeyp2 = mostSimilar._doc.PsuedoKey.split('-')[1];
+      let mostMatchKeyDate = mostSimilar._doc.PsuedoKey.split('-')[2];
+      let mostCombinedSimilarity = this.similarity(keyp1, mostMatchKeyp1) + this.similarity(keyp2, mostMatchKeyp2);
+
+      let within24Hours = false;
+      let daydiff = (new Date(parseInt(keyDate)).getMilliseconds() - new Date(parseInt(matchKeyDate)).getMilliseconds()) / 86400000;
+      if (daydiff < 1) {
+        within24Hours = true;
+      }
+
+      if (combinedSimilarity > mostCombinedSimilarity && combinedSimilarity > 1 && within24Hours) {
         mostSimilar = match;
       }
+
     }
-    return this.similarity(psuedoKey, mostSimilar._doc.PsuedoKey) > .5 ? mostSimilar : null;
+
+    return this.similarity(keyp1, mostSimilar._doc.PsuedoKey.split('-')[0]) > .5 &&
+           this.similarity(keyp2, mostSimilar._doc.PsuedoKey.split('-')[1]) > .5 &&
+           (new Date(parseInt(keyDate)).getMilliseconds() - new Date(parseInt(mostSimilar._doc.PsuedoKey.split('-')[2])).getMilliseconds()) / 86400000 < 1 ? 
+           mostSimilar : null;
   }
 
   editDistance(s1, s2) {
