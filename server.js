@@ -28,8 +28,11 @@ app.use(function(req, res, next) {
   next();
 });
 
-let matchRoutes = require('./routes/MatchRoutes');
-app.use('/api/matches', matchRoutes);
+let MatchRoutes = require('./routes/MatchRoutes');
+app.use('/api/matches', MatchRoutes);
+
+let UserRoutes = require('./routes/UserRoutes');
+app.use('/api/users', UserRoutes);
 
 let scrapeRoutes = require('./scraper');
 app.use('/api/scrape', scrapeRoutes);
