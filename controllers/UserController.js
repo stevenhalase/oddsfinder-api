@@ -108,7 +108,7 @@ module.exports = {
             if (!User) {
                 var User = new UserModel({
                     mobile_number : req.body.mobile_number,
-                    football_team : req.body.football,
+                    football_team : req.body.football_team,
                     email : req.body.email,
                     member_type : req.body.member_type,
                     password : req.body.password,
