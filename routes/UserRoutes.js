@@ -13,9 +13,14 @@ router.get('/', UserController.list);
 router.get('/:id', UserController.show);
 
 /*
- * GET
+ * POST
  */
 router.post('/login', UserController.login);
+
+/*
+ * POST
+ */
+router.post('/login/admin', UserController.loginAdmin);
 
 /*
  * POST

@@ -85,6 +85,43 @@ module.exports = {
     },
 
     /**
+     * UserController.loginAdmin()
+     */
+    loginAdmin: function (req, res) {
+        var email = req.body.email;
+        UserModel.findOne({email: email})
+        .exec(function (err, User) {
+          if (err) {
+              console.log('LOGIN ERROR: ', err)
+              return res.json({
+                  message: 'Login failed.',
+                  error: 'Login failed.'
+              });
+          }
+          if (!User) {
+              console.log('LOGIN NO USER')
+              return res.json({
+                  message: 'Login failed.',
+                  error: 'Login failed.'
+              });
+          }
+
+          if (User) {
+              if(bcrypt.compareSync(req.body.password, User.password) && User.member_type === 'admin') {
+                  return res.json(User);
+              } else {
+                  console.log('LOGIN BCRYPT FAIL')
+                  return res.json({
+                      message: 'Login failed.',
+                      error: 'Login failed.'
+                  });
+              }
+          }
+            
+        });
+    },
+
+    /**
      * UserController.create()
      */
     create: function (req, res) {
