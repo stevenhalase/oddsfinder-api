@@ -34,6 +34,9 @@ app.use('/api/matches', MatchRoutes);
 let UserRoutes = require('./routes/UserRoutes');
 app.use('/api/users', UserRoutes);
 
+let PostRoutes = require('./routes/PostRoutes');
+app.use('/api/posts', PostRoutes);
+
 let scrapeRoutes = require('./scraper');
 app.use('/api/scrape', scrapeRoutes);
 
